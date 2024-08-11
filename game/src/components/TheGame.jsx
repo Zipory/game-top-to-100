@@ -1,30 +1,33 @@
-import { allUsers } from "./NewUser";
+import { allUsers, havePlayer, setAllUsers, setHavePlayer } from "./NewUser";
 import { useState, useReducer } from "react";
 import Buttons from "./Buttons";
 import "./style.css";
 /**------------------create the game page------------------------ */
-function TheGame() {
+function TheGame(props) {
+  const end = props.end;
   const [turn, setTurn] = useState(0);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const [winner, setWinner] = useState(null);
   function nextTurn() {
     setTurn((prev) => (prev + 1) % allUsers.length);
-    if (allUsers.length ===1) forceUpdate();
+    if (allUsers.length === 1) forceUpdate();
   }
-
 
   function checkwinner(user) {
     user.steps++;
-   if( user.startNumber === 100 ) announceTheWinner(user) ; 
+    if (user.startNumber === 100) announceTheWinner(user);
   }
-function announceTheWinner(user) {
-    setTurn(()=> allUsers.length);
+  function announceTheWinner(user) {
+    setTurn(() => allUsers.length);
     setWinner(user.name);
     // localStorage.setItem(user.name, )  //  TODO!!
   }
 
   function replay() {
-    
+    setAllUsers(); //set the all users to empthy array
+    setHavePlayer(); // set the have player to false
+
+    end(); // set the starting var "tostart" to be "!tostart" which give the starting page
   }
   return (
     <div>
@@ -34,7 +37,8 @@ function announceTheWinner(user) {
           return (
             <section className="each-user" key={index}>
               <div className="index">{index + 1}</div> <br />
-              {user.name} <br/> steps: {user.steps} <br /> best: {user.scores} <br />
+              {user.name} <br /> steps: {user.steps} <br /> best: {user.scores}{" "}
+              <br />
               score: {user.startNumber} <br />
               <button
                 onClick={() => {
@@ -42,8 +46,7 @@ function announceTheWinner(user) {
                   user.startNumber++;
                   checkwinner(user);
                 }}
-                disabled={index !== turn}
-              >
+                disabled={index !== turn}>
                 +1
               </button>
               <button
@@ -52,8 +55,7 @@ function announceTheWinner(user) {
                   user.startNumber--;
                   checkwinner(user);
                 }}
-                disabled={index !== turn}
-              >
+                disabled={index !== turn}>
                 -1
               </button>
               <button
@@ -62,8 +64,7 @@ function announceTheWinner(user) {
                   user.startNumber *= 2;
                   checkwinner(user);
                 }}
-                disabled={index !== turn}
-              >
+                disabled={index !== turn}>
                 *2
               </button>
               <button
@@ -72,15 +73,23 @@ function announceTheWinner(user) {
                   user.startNumber = Math.floor(user.startNumber / 2);
                   checkwinner(user);
                 }}
-                disabled={index !== turn}
-              >
+                disabled={index !== turn}>
                 /2
               </button>
               {/* <Buttons userNumber={index}/> */}
             </section>
           );
         })}
-        {(turn === allUsers.length) && <footer><h1>the winner is:<br/>{winner} </h1><button onClick={replay}>play again</button></footer>}
+        {turn === allUsers.length && (
+          <footer>
+            <h1>
+              the winner is:
+              <br />
+              {winner}{" "}
+            </h1>
+            <button onClick={replay}>play again</button>
+          </footer>
+        )}
       </main>
     </div>
   );
