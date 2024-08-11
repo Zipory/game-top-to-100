@@ -1,7 +1,7 @@
 export let havePlayer = false;
 export let allUsers = [];
-export const setHavePlayer = () => (havePlayer = false);
-export const setAllUsers = () => (allUsers = []);
+export const setHavePlayer = () => (havePlayer = false); // this function used to starting a new game
+export const setAllUsers = () => (allUsers = []); // this function used to starting a new game
 /**----------------create new users--------------------- */
 function NewUser(props) {
   /**-------add to lacal storage------- */
@@ -9,15 +9,25 @@ function NewUser(props) {
     let user = {
       name: target.previousElementSibling.value,
       startNumber: Math.floor(Math.random() * 99),
-      scores: "0",
+      // scores: "0",
       steps: 0,
+      topSteps: 0,
     };
     havePlayer = true;
     props.force();
     allUsers.push(user);
     target.setAttribute("disabled", "true");
     target.previousElementSibling.setAttribute("disabled", "true");
-    localStorage.setItem(user.name, user.scores);
+    if (localStorage.getItem(user.name)) {
+      //check if there is a user name like this
+      //its update the user topsteps to the stored data
+      const localUser = JSON.parse(localStorage.getItem(user.name));
+      user.topSteps = localUser;
+      localStorage.setItem(user.name, JSON.stringify(user.topSteps));
+    } else {
+      //if there is none, its create & stored the new user
+      localStorage.setItem(user.name, user.topSteps);
+    }
   };
   return (
     <div className="usersInput">

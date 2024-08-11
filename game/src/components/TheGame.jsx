@@ -20,7 +20,16 @@ function TheGame(props) {
   function announceTheWinner(user) {
     setTurn(() => allUsers.length);
     setWinner(user.name);
-    // localStorage.setItem(user.name, )  //  TODO!!
+
+    // its check if current steps are lower from the topsteps,
+    //or if the user does not have topsteps at all(which means that is a new user)
+    //if is true so the stored data updated
+    if (user.steps < user.topSteps || user.topSteps === 0) {
+      console.log(user.steps, user.topSteps);
+
+      const topSteps = JSON.stringify(user.steps);
+      localStorage.setItem(user.name, topSteps);
+    }
   }
 
   function replay() {
@@ -37,7 +46,8 @@ function TheGame(props) {
           return (
             <section className="each-user" key={index}>
               <div className="index">{index + 1}</div> <br />
-              {user.name} <br /> steps: {user.steps} <br /> best: {user.scores}{" "}
+              {user.name} <br /> steps: {user.steps} <br /> best:{" "}
+              {user.topSteps}
               <br />
               score: {user.startNumber} <br />
               <button
