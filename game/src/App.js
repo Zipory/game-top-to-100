@@ -3,7 +3,7 @@ import StartForm from "./components/SartForm";
 import TheGame from "./components/TheGame";
 import Buttons from "./components/Buttons";
 import "./App.css";
-
+import Leaders from "./components/Leaders";
 function App() {
   const [toStart, setToStart] = useState(false);
   function startPlay() {
@@ -18,6 +18,7 @@ function App() {
         ) : (
           <StartForm start={startPlay} />
         )}
+        <Leaders />
       </header>
     </div>
   );

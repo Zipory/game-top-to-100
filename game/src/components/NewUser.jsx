@@ -4,7 +4,7 @@ export const setHavePlayer = () => (havePlayer = false); // this function used t
 export const setAllUsers = () => (allUsers = []); // this function used to starting a new game
 /**----------------create new users--------------------- */
 function NewUser(props) {
-  /**-------add to lacal storage------- */
+  /**-------add to local storage------- */
   const addPlayer = ({ target }) => {
     let user = {
       name: target.previousElementSibling.value,
