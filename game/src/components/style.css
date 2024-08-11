@@ -13,3 +13,20 @@
     border-radius: 10%;
     margin-top: 10px;
 }
+
+button, input {
+    font-size: 30px;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px white;
+}
+
+button:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.winner {
+    color:  gold;
+}

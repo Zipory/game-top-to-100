@@ -1,5 +1,5 @@
 import { useState } from "react";
-import StartForm from "./components/SartForm";
+import StartForm from "./components/StartForm";
 import TheGame from "./components/TheGame";
 import Buttons from "./components/Buttons";
 import "./App.css";
@@ -18,7 +18,7 @@ function App() {
         ) : (
           <StartForm start={startPlay} />
         )}
-        <Leaders />
+        <Leaders  />
       </header>
     </div>
   );

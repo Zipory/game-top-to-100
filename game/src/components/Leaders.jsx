@@ -18,9 +18,9 @@ const Leaders = () => {
 
   return (
     <>
-      <button onClick={showLeaders}>Sowe leaders</button>
+      <button onClick={showLeaders}>Show leaders</button>
       {on && (
-        <div className="leaders">
+        <div className="leaders winner">
           <h2>Leaders</h2>
           <ol>
             {lowestThree.map((user, index) => {

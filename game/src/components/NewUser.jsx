@@ -6,12 +6,14 @@ export const setAllUsers = () => (allUsers = []); // this function used to start
 function NewUser(props) {
   /**-------add to local storage------- */
   const addPlayer = ({ target }) => {
+    if (target.previousElementSibling.value.length < 2 ) {return}
     let user = {
       name: target.previousElementSibling.value,
       startNumber: Math.floor(Math.random() * 99),
       // scores: "0",
       steps: 0,
       topSteps: 0,
+      arrOfThreeSteps : [],
     };
     havePlayer = true;
     props.force();

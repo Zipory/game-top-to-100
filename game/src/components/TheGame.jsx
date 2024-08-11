@@ -1,6 +1,5 @@
 import { allUsers, havePlayer, setAllUsers, setHavePlayer } from "./NewUser";
 import { useState, useReducer } from "react";
-import Buttons from "./Buttons";
 import "./style.css";
 /**------------------create the game page------------------------ */
 function TheGame(props) {
@@ -21,12 +20,19 @@ function TheGame(props) {
     setTurn(() => allUsers.length);
     setWinner(user.name);
 
-    // its check if current steps are lower from the topsteps,
+   /**----------trying to creat an Array of scores.------ */ <TODO></TODO>
+    // user.arrOfThreeSteps.push(user.steps);
+    // let theArr = JSON.stringify(user.arrOfThreeSteps);
+    // localStorage.setItem((user.name)+1, theArr);
+    // console.log(user.arrOfThreeSteps);
+/**----------------------------------------------------- */
+
+     // its check if current steps are lower from the topsteps,
     //or if the user does not have topsteps at all(which means that is a new user)
     //if is true so the stored data updated
     if (user.steps < user.topSteps || user.topSteps === 0) {
       console.log(user.steps, user.topSteps);
-
+      user.topSteps = user.steps;
       const topSteps = JSON.stringify(user.steps);
       localStorage.setItem(user.name, topSteps);
     }
@@ -38,6 +44,14 @@ function TheGame(props) {
 
     end(); // set the starting var "tostart" to be "!tostart" which give the starting page
   }
+
+  /**------------Reset those players-------------- */
+  function replay2() {
+    allUsers.map( (user) => {return (user.steps = 0, user.startNumber =  Math.floor(Math.random() * 99))});
+    console.log(allUsers);
+    setTurn(0);
+  }
+
   return (
     <div>
       <h2>GET TO 100</h2>
@@ -92,12 +106,13 @@ function TheGame(props) {
         })}
         {turn === allUsers.length && (
           <footer>
-            <h1>
-              the winner is:
+            <h1 className="winner">
+              The winner is:
               <br />
-              {winner}{" "}
+              {winner}
             </h1>
-            <button onClick={replay}>play again</button>
+            <button onClick={replay}>Go back</button>
+            <button onClick={replay2}>Replay that game</button>
           </footer>
         )}
       </main>
