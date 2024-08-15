@@ -7,8 +7,9 @@ import Leaders from "./components/Leaders";
 function App() {
   const [toStart, setToStart] = useState(false);
   function startPlay() {
-    setToStart(() => !toStart); //changed from true to var
+    setToStart(() => !toStart); //changed from false to true
   }
+
 
   return (
     <div className="App">

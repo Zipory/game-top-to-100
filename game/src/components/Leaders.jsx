@@ -24,7 +24,7 @@ const Leaders = () => {
           <h2>Leaders</h2>
           <ol>
             {lowestThree.map((user, index) => {
-              return <li key={index}>{`${user.key}:${user.value}`}</li>;
+              return <li key={index}>{`${user.key}:  ${user.value}`}</li>;
             })}
           </ol>
         </div>

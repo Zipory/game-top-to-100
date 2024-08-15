@@ -2,14 +2,16 @@ import { allUsers, havePlayer, setAllUsers, setHavePlayer } from "./NewUser";
 import { useState, useReducer } from "react";
 import "./style.css";
 /**------------------create the game page------------------------ */
+// let [myAllUsers, setMyAllUsers] = useState([...allUsers]);
 function TheGame(props) {
+  let [myAllUsers, setMyAllUsers] = useState([...allUsers]);
   const end = props.end;
   const [turn, setTurn] = useState(0);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const [winner, setWinner] = useState(null);
   function nextTurn() {
-    setTurn((prev) => (prev + 1) % allUsers.length);
-    if (allUsers.length === 1) forceUpdate();
+    setTurn((prev) => (prev + 1) % myAllUsers.length);
+    if (myAllUsers.length === 1) forceUpdate();
   }
 
   function checkwinner(user) {
@@ -17,10 +19,10 @@ function TheGame(props) {
     if (user.startNumber === 100) announceTheWinner(user);
   }
   function announceTheWinner(user) {
-    setTurn(() => allUsers.length);
+    setTurn(() => myAllUsers.length);
     setWinner(user.name);
 
-   /**----------trying to creat an Array of scores.------ */ <TODO></TODO>
+   /**----------trying to creat an Array of scores.------TODO!!!! */ 
     // user.arrOfThreeSteps.push(user.steps);
     // let theArr = JSON.stringify(user.arrOfThreeSteps);
     // localStorage.setItem((user.name)+1, theArr);
@@ -47,19 +49,35 @@ function TheGame(props) {
 
   /**------------Reset those players-------------- */
   function replay2() {
-    allUsers.map( (user) => {return (user.steps = 0, user.startNumber =  Math.floor(Math.random() * 99))});
-    console.log(allUsers);
+    myAllUsers.map( (user) => {return (user.steps = 0, user.startNumber =  Math.floor(Math.random() * 99))});
+    console.log(myAllUsers);
     setTurn(0);
+  }
+
+  function quit(i) {
+    console.log(myAllUsers);
+    
+   
+    
+    let newArr = myAllUsers.filter( (user, index) => {
+      console.log("i: ", i);
+      console.log("index: ",index);
+      return (index !== i)  });
+    console.log(newArr);
+    setMyAllUsers([...newArr]);
   }
 
   return (
     <div>
-      <h2>GET TO 100</h2>
+      <h2>GET TO 100 </h2>
       <main className="users">
-        {allUsers.map((user, index) => {
+        {myAllUsers.map((user, index) => {
           return (
             <section className="each-user" key={index}>
-              <div className="index">{index + 1}</div> <br />
+              <div className="index">
+                {index + 1}
+                <button type="button" onClick={(event) => quit(index)}>quit</button>
+                </div> <br />
               {user.name} <br /> steps: {user.steps} <br /> best:{" "}
               {user.topSteps}
               <br />
@@ -104,7 +122,7 @@ function TheGame(props) {
             </section>
           );
         })}
-        {turn === allUsers.length && (
+        {turn === myAllUsers.length && (
           <footer>
             <h1 className="winner">
               The winner is:

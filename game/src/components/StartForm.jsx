@@ -28,6 +28,7 @@ function startPlay() {
 
     return ( 
         <div>
+              <h2>GET TO 100</h2>
         <button onClick={()=>morePlayer()}>more player</button>
         {players}
         <button onClick={startPlay} disabled={!havePlayer}>start play</button>
